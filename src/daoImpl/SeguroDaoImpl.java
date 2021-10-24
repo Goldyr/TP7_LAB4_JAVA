@@ -15,19 +15,74 @@ import entidades.TipoSeguro;
 
 public class SeguroDaoImpl implements SeguroDao{
 
-	private static final String insert = "INSERT INTO personas(Dni, Nombre, Apellido) VALUES(?, ?, ?)";
-	
+	private static final String insert = "INSERT INTO Seguro(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
+	private static final String read_x_tipoSeguro = "Select * FROM Seguro where idTipo = ?";
 	private static final String lastId = "SELECT MAX(idSeguro) FROM segurosgroup.seguros;";
 	private static final String tipoSeguro= "SELECT * FROM tiposeguros;"; 
-
+	private static final String readall = "SELECT * FROM segurosgroup.seguros";
 	
 	@Override
-	public boolean insert(Seguro persona) {
-		return false;
+	public boolean insert(Seguro seguro) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean successInsert = false;
+		try
+		{
+			statement = conexion.prepareStatement(insert);
+			statement.setInt(1, seguro.getIdSeguro());
+			statement.setString(2, seguro.getDescripcion());
+			statement.setInt(3, seguro.getIdTipo());
+			statement.setInt(4, seguro.getCostoContratacion());
+			statement.setInt(5, seguro.getCostoAsegurado());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				successInsert = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		return successInsert;
 		
 	}
 
 
+	public List<Seguro> readX_tiposeguro(int idTipoSeguro) { //lee seguros segun el id del tipo de seguro Punto 3
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		ArrayList<Seguro> seguros = new ArrayList<Seguro>();
+
+		try
+		{
+			statement = conexion.prepareStatement(read_x_tipoSeguro);
+			statement.setInt(1, idTipoSeguro);
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next())
+			{
+				seguros.add(getSeguro(resultSet));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return seguros;
+
+	}
+		
+
+		
+	
 	
 
 	
@@ -68,7 +123,7 @@ public class SeguroDaoImpl implements SeguroDao{
 			resultSet = statement.executeQuery();
 			while(resultSet.next())
 			{
-				listatiposeguros.add(setTipoSeguro(resultSet));
+				listatiposeguros.add(getTipoSeguro(resultSet));
 			}
 		} 
 		catch (SQLException e) 
@@ -80,7 +135,7 @@ public class SeguroDaoImpl implements SeguroDao{
 	}
 	
 	
-	private TipoSeguro setTipoSeguro(ResultSet resultSet) throws SQLException
+	private TipoSeguro getTipoSeguro(ResultSet resultSet) throws SQLException
 	{
 		int idTipo = resultSet.getInt("idTipo");
 		String descripcion = resultSet.getString("descripcion");
@@ -89,14 +144,39 @@ public class SeguroDaoImpl implements SeguroDao{
 
 
 
-
+	private Seguro getSeguro(ResultSet resultSet) throws SQLException
+	{
+		int idSeguro = resultSet.getInt("idSeguro");
+		String descripcion = resultSet.getString("descripcion");
+		int idTipo = resultSet.getInt("idTipo");
+		int costoContratacion  = resultSet.getInt("costoContratacion");
+		int costoAsegurado = resultSet.getInt("costoAsegurado");
+		return new Seguro(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado);
+	}
 
 
 
 	@Override
 	public List<Seguro> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Seguro> seguros = new ArrayList<Seguro>();
+		Conexion conexion = Conexion.getConexion();
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				seguros.add(getSeguro(resultSet));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return seguros;
+
 	}
 	
 	

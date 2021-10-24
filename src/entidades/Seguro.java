@@ -8,6 +8,16 @@ public class Seguro {
 	private int costoContratacion; 
 	private int costoAsegurado; 
 	
+	public Seguro() {}
+	
+	public Seguro(int idSeguro, String descripcion, int idTipo, int costoContratacion, int costoAsegurado) {
+		setIdSeguro(idSeguro);
+		setDescripcion(descripcion);
+		setIdTipo(idTipo);
+		setCostoContratacion(costoContratacion);
+		setCostoAsegurado(costoAsegurado);
+		
+	}
 
 	public int getIdSeguro() {
 		return idSeguro;
