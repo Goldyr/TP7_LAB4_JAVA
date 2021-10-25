@@ -29,6 +29,12 @@ public class servletSeguro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		
+
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int selectedId = Integer.parseInt(request.getParameter("tipoSeguro"));
 		
 		// 
@@ -37,20 +43,11 @@ public class servletSeguro extends HttpServlet {
 			ArrayList<Seguro> listaSeguros = (ArrayList<Seguro>) dao.readX_tiposeguro(selectedId);
 			
 			request.setAttribute("listaFiltrada", listaSeguros);
-			
-			for (Seguro seguro : listaSeguros) {
-				System.out.println(seguro.getDescripcion());
-			}
-			
+
+
 			RequestDispatcher rd = request.getRequestDispatcher("/ListarSeguros.jsp");
 			rd.forward(request, response);
 		}
-
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 	}
 
 }

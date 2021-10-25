@@ -21,7 +21,7 @@
 
 <h3>"Tipo de seguros de la base de datos"</h3>
 
-<form>
+
 	<p>Busqueda por tipo de seguros: </p>
 	<form method ="post" action="servletSeguro">
 		<select name="tipoSeguro">
@@ -42,7 +42,7 @@
 	
 	<% 
 	ArrayList<Seguro> listaSegurosFiltrados = null;
-	if(request.getAttribute("listaSeguros")!= null)
+	if(request.getAttribute("listaFiltrada")!= null)
 	{
 	
 	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listaSeguros");
@@ -61,8 +61,10 @@
 	
 	<%
 	if(listaSegurosFiltrados != null)
+	{
 	for(Seguro seguro: listaSegurosFiltrados)
 	{
+		System.out.println(seguro.getCostoAsegurado());
 	%>
  
 	<tr>
@@ -72,10 +74,10 @@
 	<td> <%= seguro.getIdTipo() %> </td>
 	<td> <%= seguro.getCostoAsegurado() %> </td>
 	</tr>
-	<% } %>
+	<% } 
+	}%>
 	</table>
 	
-</form>
 
 </body>
 </html>
