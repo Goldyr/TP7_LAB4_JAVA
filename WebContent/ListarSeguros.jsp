@@ -1,5 +1,6 @@
 <%@ page import= "daoImpl.SeguroDaoImpl" %>
 <%@ page import = "entidades.TipoSeguro" %>
+<%@ page import = "entidades.Seguro" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -22,6 +23,7 @@
 
 <form>
 	<p>Busqueda por tipo de seguros: </p>
+	<form method ="post" action="servletSeguro">
 		<select name="tipoSeguro">
 			<%
 			SeguroDaoImpl segImpl = new SeguroDaoImpl();
@@ -35,6 +37,44 @@
 			}
 			%>
 		</select>
+		<input type="submit" value="Filtrar" name="btnFiltrarSeguros">
+	</form>
+	
+	<% 
+	ArrayList<Seguro> listaSegurosFiltrados = null;
+	if(request.getAttribute("listaSeguros")!= null)
+	{
+	
+	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listaSeguros");
+	
+	}
+	 %>
+	
+	<table border="1">
+	<tr> 
+		<th> ID Seguro</th>
+		<th> Descripcion Seguro</th>
+		<th> Costo contratacion</th>
+		<th> Descripcion tipo Seguro</th>
+		<th>Costo maximo asegurado</th>
+	</tr>
+	
+	<%
+	if(listaSegurosFiltrados != null)
+	for(Seguro seguro: listaSegurosFiltrados)
+	{
+	%>
+ 
+	<tr>
+	<td> <%= seguro.getIdSeguro() %> </td>
+	<td> <%= seguro.getDescripcion() %> </td>
+	<td> <%= seguro.getCostoContratacion() %> </td>
+	<td> <%= seguro.getIdTipo() %> </td>
+	<td> <%= seguro.getCostoAsegurado() %> </td>
+	</tr>
+	<% } %>
+	</table>
+	
 </form>
 
 </body>
