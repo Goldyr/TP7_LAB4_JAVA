@@ -22,7 +22,7 @@
 	
 	<h2>Agregar seguros</h2>
 
-	<form method="get">
+	<form action="serlvletSeguro" method="get">
 		<%SeguroDaoImpl segImpl = new SeguroDaoImpl(); %>
 		<p>Id seguro <%=segImpl.lastId()+1 %></p> 
 		<p>Descripcion <input type="text" name="txtDescripcion"> </p>
@@ -43,8 +43,12 @@
 		<p>Costo contratacion <input type="text" name="txtCosto"> </p>
 		<p>Costo maximo asegurado <input type="text" name="txtCostoMax"> </p>
 		
-		<button> Aceptar </button>
+		<input type="submit" value="Aceptar" name="btnaceptar">
 	
 	</form>
+	
+	<% 
+
+	%>
 </body>
 </html>

@@ -11,7 +11,7 @@ public class Seguro {
 	public Seguro() {}
 	
 	public Seguro(int idSeguro, String descripcion, int idTipo, int costoContratacion, int costoAsegurado) {
-		setIdSeguro(idSeguro);
+		
 		setDescripcion(descripcion);
 		setIdTipo(idTipo);
 		setCostoContratacion(costoContratacion);
