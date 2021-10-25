@@ -15,11 +15,11 @@ import entidades.TipoSeguro;
 
 public class SeguroDaoImpl implements SeguroDao{
 
-	private static final String insert = "INSERT INTO Seguro(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
-	private static final String read_x_tipoSeguro = "Select * FROM Seguro where idTipo = ?";
-	private static final String lastId = "SELECT MAX(idSeguro) FROM segurosgroup.seguros;";
+	private static final String insert = "INSERT INTO Seguros(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
+	private static final String read_x_tipoSeguro = "Select * FROM Seguros where idTipo = ?";
+	private static final String lastId = "SELECT MAX(idSeguro) FROM seguros;";
 	private static final String tipoSeguro= "SELECT * FROM tiposeguros;"; 
-	private static final String readall = "SELECT * FROM segurosgroup.seguros";
+	private static final String readall = "SELECT * FROM seguros";
 	
 	@Override
 	public boolean insert(Seguro seguro) {
@@ -79,14 +79,6 @@ public class SeguroDaoImpl implements SeguroDao{
 		return seguros;
 
 	}
-		
-
-		
-	
-	
-
-	
-
 	
 	//Devuelve la ultima id 
 	public int lastId() {

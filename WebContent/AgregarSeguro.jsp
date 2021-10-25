@@ -24,7 +24,7 @@
 
 	<form action="serlvletSeguro" method="get">
 		<%SeguroDaoImpl segImpl = new SeguroDaoImpl(); %>
-		<p>Id seguro <%=segImpl.lastId()+1 %></p> 
+		<p>seguro <%=segImpl.lastId()+1 %></p>  
 		<p>Descripcion <input type="text" name="txtDescripcion"> </p>
 		<p>Tipo de seguro 
 		<select name="tipoSeguro">
@@ -46,9 +46,17 @@
 		<input type="submit" value="Aceptar" name="btnaceptar">
 	
 	</form>
-	
 	<% 
-
+		boolean confir = false;
+		if(request.getAttribute("confirmacion")!=null){
+			confir = Boolean.parseBoolean(request.getAttribute("confirmacion").toString());
+		}
+		if(confir){
+			%>
+			Se agrego con exito
+			<%	
+		}
 	%>
+	
 </body>
 </html>

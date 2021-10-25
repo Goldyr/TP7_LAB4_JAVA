@@ -35,11 +35,13 @@ public class serlvletSeguro extends HttpServlet {
 			Seguro seguroaux = new Seguro();
 			seguroaux.setCostoAsegurado(Integer.parseInt(request.getParameter("txtCosto")) );
 			seguroaux.setCostoContratacion(Integer.parseInt(request.getParameter("txtCostoMax")) );
-			seguroaux.setIdSeguro(Integer.parseInt(request.getParameter("tipoSeguro")) );
+			seguroaux.setIdTipo(Integer.parseInt(request.getParameter("tipoSeguro")) );
 			seguroaux.setDescripcion(request.getParameter("txtDescripcion"));
-			
+				
 			SeguroDaoImpl sdao = new SeguroDaoImpl();
-			sdao.insert(seguroaux);
+			int ultimoid= sdao.lastId()+1;
+			seguroaux.setIdSeguro(ultimoid);
+			confirmo = sdao.insert(seguroaux);
 		}
 		request.setAttribute("confirmacion", confirmo);
 		RequestDispatcher rd = request.getRequestDispatcher("AgregarSeguro.jsp");
