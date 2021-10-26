@@ -45,7 +45,7 @@
 	if(request.getAttribute("listaFiltrada")!= null)
 	{
 	
-	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listaSeguros");
+	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listaFiltrada");
 	
 	}
 	 %>
