@@ -1,4 +1,5 @@
 <%@ page import= "daoImpl.SeguroDaoImpl" %>
+<%@ page import= "daoImpl.TipoSeguroDaoImpl" %>
 <%@ page import = "entidades.TipoSeguro" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "java.util.List" %>
@@ -18,13 +19,14 @@
 	<br>
 	<a href="AgregarSeguro.jsp">Agregar seguro</a>
 	<br>
-	<a href="ListarSeguros.jsp">Listar seguros</a>
+	<a href="servletSeguro?Param=1" name="listar">Listar seguros</a>
 	
 	<h2>Agregar seguros</h2>
 
-	<form action="serlvletSeguro" method="get">
-		<%SeguroDaoImpl segImpl = new SeguroDaoImpl(); %>
-		<p>seguro <%=segImpl.lastId()+1 %></p>  
+	<form method="get" action="servletSeguro">
+		<%TipoSeguroDaoImpl segImpl = new TipoSeguroDaoImpl(); %>
+		<%SeguroDaoImpl segImplSeguro = new SeguroDaoImpl(); %>
+		<p>Id seguro <%=segImplSeguro.lastId()+1 %></p> 
 		<p>Descripcion <input type="text" name="txtDescripcion"> </p>
 		<p>Tipo de seguro 
 		<select name="tipoSeguro">
@@ -43,9 +45,9 @@
 		<p>Costo contratacion <input type="text" name="txtCosto"> </p>
 		<p>Costo maximo asegurado <input type="text" name="txtCostoMax"> </p>
 		
-		<input type="submit" value="Aceptar" name="btnaceptar">
-	
+		<input type="submit" value="Aceptar" name="btnaceptar">	
 	</form>
+	
 	<% 
 		boolean confir = false;
 		if(request.getAttribute("confirmacion")!=null){
@@ -57,6 +59,5 @@
 			<%	
 		}
 	%>
-	
 </body>
 </html>

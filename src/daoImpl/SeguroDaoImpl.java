@@ -1,5 +1,4 @@
 package daoImpl;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,6 @@ import java.util.List;
 
 import dao.SeguroDao;
 import entidades.Seguro;
-import entidades.TipoSeguro;
 
 
 
@@ -79,6 +77,8 @@ public class SeguroDaoImpl implements SeguroDao{
 		return seguros;
 
 	}
+		
+
 	
 	//Devuelve la ultima id 
 	public int lastId() {
@@ -103,38 +103,6 @@ public class SeguroDaoImpl implements SeguroDao{
 		
 	}
 	
-	//Devuelve una lista de seguros donde van a tener definido Tipo de seguro y el id del tipo de seguro
-	public List<TipoSeguro> ddlTipoSeguros() {
-		PreparedStatement statement;
-		ResultSet resultSet; 
-		ArrayList<TipoSeguro> listatiposeguros = new ArrayList<TipoSeguro>();
-		Conexion conexion = Conexion.getConexion();
-		try 
-		{
-			statement = conexion.getSQLConexion().prepareStatement(tipoSeguro);
-			resultSet = statement.executeQuery();
-			while(resultSet.next())
-			{
-				listatiposeguros.add(getTipoSeguro(resultSet));
-			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return listatiposeguros;
-	}
-	
-	
-	private TipoSeguro getTipoSeguro(ResultSet resultSet) throws SQLException
-	{
-		int idTipo = resultSet.getInt("idTipo");
-		String descripcion = resultSet.getString("descripcion");
-		return new TipoSeguro(idTipo,descripcion);
-	}
-
-
 
 	private Seguro getSeguro(ResultSet resultSet) throws SQLException
 	{

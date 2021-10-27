@@ -1,5 +1,7 @@
 <%@ page import= "daoImpl.SeguroDaoImpl" %>
+<%@ page import= "daoImpl.TipoSeguroDaoImpl" %>
 <%@ page import = "entidades.TipoSeguro" %>
+<%@ page import = "entidades.Seguro" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -11,20 +13,21 @@
 <title>Listar Seguro</title>
 </head>
 <body>
-<a href="Inicio.jsp">Inicio</a>
+<a href="Inicio.jsp" >Inicio</a>
 <br>
 <a href="AgregarSeguro.jsp">Agregar seguro</a>
 <br>
-<a href="ListarSeguros.jsp">Listar seguros</a>
+<a href="servletSeguro?Param=1">Listar seguros</a>
 <br>
 
 <h3>"Tipo de seguros de la base de datos"</h3>
 
-<form>
+
 	<p>Busqueda por tipo de seguros: </p>
+	<form method ="post" action="servletSeguro">
 		<select name="tipoSeguro">
 			<%
-			SeguroDaoImpl segImpl = new SeguroDaoImpl();
+			TipoSeguroDaoImpl segImpl = new TipoSeguroDaoImpl();
 			List<TipoSeguro> listatiposeguros = new ArrayList<TipoSeguro>();
 			listatiposeguros = segImpl.ddlTipoSeguros();
 			for(TipoSeguro ts : listatiposeguros)//Por cada objeto dentro de la lista me genera una opcion mas para el ddl
@@ -35,8 +38,55 @@
 			}
 			%>
 		</select>
-</form>
+		<input type="submit" value="Filtrar" name="btnFiltrarSeguros">
+	</form>
+	
+	<% 
+	ArrayList<Seguro> listaSegurosFiltrados = null;
+	if(request.getAttribute("listartodo")!= null)
+	{
+	
+	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listartodo");
+	
+	}
+	if(request.getAttribute("listaFiltrada")!= null)
+	{
+	
+	 listaSegurosFiltrados = (ArrayList<Seguro>) request.getAttribute("listaFiltrada");
+	
+	}
+	 %>
+	
+	<table border="1">
+	<tr> 
+		<th> ID Seguro</th>
+		<th> Descripcion Seguro</th>
+		<th> Descripcion tipo Seguro</th>
+		<th> Costo contratacion</th>
 
+		<th>Costo maximo asegurado</th>
+	</tr>
+	
+	<%
+	if(listaSegurosFiltrados != null )
+	{
+		TipoSeguroDaoImpl tiposegimp = new TipoSeguroDaoImpl();
+	for(Seguro seguro: listaSegurosFiltrados)
+	{
+		//System.out.println(seguro.getCostoAsegurado());
+	%>
+    
+	<tr>
+	<td> <%= seguro.getIdSeguro() %> </td>
+	<td> <%= seguro.getDescripcion() %> </td>
+	<td> <%= tiposegimp.readTipo_id(seguro.getIdTipo()).getDescripcion()%> </td>
+	<td> <%= seguro.getCostoContratacion() %> </td>
+	<td> <%= seguro.getCostoAsegurado() %> </td>
+	</tr>
+	<% } 
+	}%>
+	</table>
+	
 
 </body>
 </html>
