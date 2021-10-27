@@ -11,7 +11,7 @@
 <br>
 <a href="AgregarSeguro.jsp">Agregar seguro</a>
 <br>
-<a href="ListarSeguros.jsp">Listar seguros</a>
+<a href="servletSeguro?Param=1" >Listar seguros</a>
 <br>
 
 <h2> Soy la página inicio</h2>

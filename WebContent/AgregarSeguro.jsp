@@ -1,4 +1,5 @@
 <%@ page import= "daoImpl.SeguroDaoImpl" %>
+<%@ page import= "daoImpl.TipoSeguroDaoImpl" %>
 <%@ page import = "entidades.TipoSeguro" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "java.util.List" %>
@@ -18,13 +19,14 @@
 	<br>
 	<a href="AgregarSeguro.jsp">Agregar seguro</a>
 	<br>
-	<a href="ListarSeguros.jsp">Listar seguros</a>
+	<a href="servletSeguro?Param=1" name="listar">Listar seguros</a>
 	
 	<h2>Agregar seguros</h2>
 
 	<form method="get">
-		<%SeguroDaoImpl segImpl = new SeguroDaoImpl(); %>
-		<p>Id seguro <%=segImpl.lastId()+1 %></p> 
+		<%TipoSeguroDaoImpl segImpl = new TipoSeguroDaoImpl(); %>
+		<%SeguroDaoImpl segImplSeguro = new SeguroDaoImpl(); %>
+		<p>Id seguro <%=segImplSeguro.lastId()+1 %></p> 
 		<p>Descripcion <input type="text" name="txtDescripcion"> </p>
 		<p>Tipo de seguro 
 		<select name="tipoSeguro">

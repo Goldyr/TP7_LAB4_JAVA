@@ -1,7 +1,6 @@
 package entidades;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 public class TipoSeguro {
 	private int idTipo;
@@ -11,6 +10,10 @@ public class TipoSeguro {
 	{
 		this.setIdTipo(idTipo);
 		this.setDescripcion(descripcion);
+		
+	}
+	
+	public TipoSeguro() {
 		
 	}
 	public int getIdTipo() {

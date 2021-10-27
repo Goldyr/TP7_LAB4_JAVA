@@ -29,7 +29,15 @@ public class servletSeguro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		
+		if(request.getParameter("Param")!=null) {
+			SeguroDaoImpl dao = new SeguroDaoImpl();
+			ArrayList<Seguro> listaSeguros = (ArrayList<Seguro>) dao.readAll();
+			
+			request.setAttribute("listartodo", listaSeguros);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("ListarSeguros.jsp");
+			rd.forward(request, response);
+		}
 
 	}
 

@@ -9,16 +9,17 @@ import java.util.List;
 
 import dao.SeguroDao;
 import entidades.Seguro;
-import entidades.TipoSeguro;
+
 
 
 
 public class SeguroDaoImpl implements SeguroDao{
 
-	private static final String insert = "INSERT INTO Seguro(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO Seguros(idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado) VALUES(?, ?, ?, ?, ?)";
 	private static final String read_x_tipoSeguro = "Select * FROM Seguros where idTipo = ?";
 	private static final String lastId = "SELECT MAX(idSeguro) FROM segurosgroup.seguros;";
-	private static final String tipoSeguro= "SELECT * FROM tiposeguros;"; 
+
+
 	private static final String readall = "SELECT * FROM segurosgroup.seguros";
 	
 	@Override
@@ -105,36 +106,10 @@ public class SeguroDaoImpl implements SeguroDao{
 		
 	}
 	
-	//Devuelve una lista de seguros donde van a tener definido Tipo de seguro y el id del tipo de seguro
-	public List<TipoSeguro> ddlTipoSeguros() {
-		PreparedStatement statement;
-		ResultSet resultSet; 
-		ArrayList<TipoSeguro> listatiposeguros = new ArrayList<TipoSeguro>();
-		Conexion conexion = Conexion.getConexion();
-		try 
-		{
-			statement = conexion.getSQLConexion().prepareStatement(tipoSeguro);
-			resultSet = statement.executeQuery();
-			while(resultSet.next())
-			{
-				listatiposeguros.add(getTipoSeguro(resultSet));
-			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return listatiposeguros;
-	}
+
 	
 	
-	private TipoSeguro getTipoSeguro(ResultSet resultSet) throws SQLException
-	{
-		int idTipo = resultSet.getInt("idTipo");
-		String descripcion = resultSet.getString("descripcion");
-		return new TipoSeguro(idTipo,descripcion);
-	}
+
 
 
 
